@@ -12,4 +12,4 @@ After the player has logged in, keep-alive packets are sent to keep the connecti
 Feel free to fork and/or use this project however you desire.
 
 A huge thanks to VelocityPowered for your packet utility and id mapping. Without your project this would have been a lot more time consuming.
-Please check out their amazing project here: https://github.com/VelocityPowered/Velocity
+Please check out their amazing project [here](https://github.com/VelocityPowered/Velocity)
