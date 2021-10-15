@@ -27,6 +27,7 @@ public class JoinGame implements Packet {
 	private boolean reducedDebugInfo;
 	private boolean showRespawnScreen;
 
+	// FIXME: 1.16+ Implementation
 	@Override
 	public void write(ByteBuf buf, Version version, Direction direction) {
 		buf.writeInt(this.entityId);
