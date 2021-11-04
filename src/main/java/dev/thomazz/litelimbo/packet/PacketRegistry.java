@@ -164,7 +164,7 @@ public final class PacketRegistry {
 
 	private static <K extends Enum<K>, V> Map<K, V> createEnumMap(Class<K> clazz, Supplier<V> valueSupplier) {
 		Map<K, V> map = new EnumMap<>(clazz);
-		K[] values = SharedSecrets.getJavaLangAccess().getEnumConstantsShared(clazz);
+		K[] values = clazz.getEnumConstants();
 		Arrays.stream(values).forEach(version -> map.put(version, valueSupplier.get()));
 		return map;
 	}
