@@ -46,13 +46,17 @@ public class LoginHandler implements PacketHandler {
 			ServerLogin serverLogin = (ServerLogin) packet;
 			this.username = serverLogin.getUsername();
 
-			EncryptionRequest request = new EncryptionRequest(
+			if (server.isOnlineMode()) {
+				EncryptionRequest request = new EncryptionRequest(
 					"",
 					server.getKeyPair().getPublic().getEncoded(),
 					server.getVerify()
-			);
+				);
 
-			channel.writeAndFlush(request);
+				channel.writeAndFlush(request);
+			} else {
+				this.loginSequence(server, channel);
+			}
 		}
 
 		if (packet instanceof EncryptionResponse) {

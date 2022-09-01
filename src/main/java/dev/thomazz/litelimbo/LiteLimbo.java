@@ -36,6 +36,7 @@ public class LiteLimbo extends Connection {
 
 	private String welcomeMessage;
 	private String motdMessage;
+	private boolean onlineMode;
 
 	public LiteLimbo() {
 		PacketRegistry.init();
@@ -59,9 +60,13 @@ public class LiteLimbo extends Connection {
 
 	@Override
 	public void start(InetSocketAddress address) {
+		LiteLimbo.LOGGER.info("Starting server in " + (this.onlineMode ? "online" : "offline") + " mode");
+
 		super.start(address);
 
-		Thread keepAliveThread = new Thread("Limbo-KeepAlive-Thread") {
+		LiteLimbo.LOGGER.info("Started limbo server on: " + address.getHostName() + ":" + address.getPort());
+
+		Thread keepAliveThread = new Thread("limbo-keep-alive") {
 			private long keepAliveCounter = 0;
 
 			@Override
@@ -82,6 +87,8 @@ public class LiteLimbo extends Connection {
 		// Prevent from stopping JVM close
 		keepAliveThread.setDaemon(true);
 		keepAliveThread.start();
+
+		LiteLimbo.LOGGER.info("Started keep alive thread");
 	}
 
 	@Override
@@ -133,6 +140,11 @@ public class LiteLimbo extends Connection {
 
 	public LiteLimbo motdMessage(String message) {
 		this.motdMessage = message;
+		return this;
+	}
+
+	public LiteLimbo onlineMode(boolean onlineMode) {
+		this.onlineMode = onlineMode;
 		return this;
 	}
 }

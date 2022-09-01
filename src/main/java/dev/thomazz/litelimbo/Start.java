@@ -22,6 +22,7 @@ public final class Start {
 
 				liteLimbo.welcomeMessage(ColorConverter.convert(config.getProperty("welcome.message")));
 				liteLimbo.motdMessage(ColorConverter.convert(config.getProperty("motd.message")));
+				liteLimbo.onlineMode(Boolean.parseBoolean(config.getProperty("online.mode")));
 				port = Integer.parseInt(config.getProperty("server.port"));
 			} catch (Exception e) {
 				LiteLimbo.LOGGER.error("Could not read config file!");
@@ -30,7 +31,7 @@ public final class Start {
 
 			// Start and add shutdown hook
 			liteLimbo.start(new InetSocketAddress(Constants.LOCAL_IP, port));
-			Runtime.getRuntime().addShutdownHook(new Thread(liteLimbo::die));
+			Runtime.getRuntime().addShutdownHook(new Thread(liteLimbo::die, "limbo-shutdown"));
 		} catch (Exception e) {
 			LiteLimbo.LOGGER.info("Could not start LiteLimbo!");
 			e.printStackTrace();

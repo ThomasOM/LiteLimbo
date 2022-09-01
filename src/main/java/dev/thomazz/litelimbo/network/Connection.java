@@ -30,11 +30,11 @@ public abstract class Connection {
 		NettyThreadFactory threadFactory = new NettyThreadFactory();
 
 		if (this.epoll = Epoll.isAvailable()) {
-			LiteLimbo.LOGGER.info("Using Epoll");
+			LiteLimbo.LOGGER.info("Creating connection using Epoll");
 			this.bossGroup = new EpollEventLoopGroup(0, threadFactory);
 			this.workerGroup = new EpollEventLoopGroup(0, threadFactory);
 		} else {
-			LiteLimbo.LOGGER.info("Using NIO");
+			LiteLimbo.LOGGER.info("Creating connection using NIO");
 			this.bossGroup = new NioEventLoopGroup(0, threadFactory);
 			this.workerGroup = new NioEventLoopGroup(0, threadFactory);
 		}
@@ -57,8 +57,6 @@ public abstract class Connection {
 				LiteLimbo.LOGGER.error("Failed to bind channel: " + future.cause());
 			}
 		});
-
-		LiteLimbo.LOGGER.info("Starting connection");
 	}
 
 	public void die() {
