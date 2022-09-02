@@ -21,8 +21,10 @@ public class ServerLoginSuccess implements Packet {
 	public void write(ByteBuf buf, Version version, Direction direction) {
 		if (version.compareTo(Version.MINECRAFT_1_16) >= 0) {
 			MinecraftBufferReader.writeUuidIntArray(buf, uuid);
-		} else {
+		} else if (version.compareTo(Version.MINECRAFT_1_7_6) >= 0) {
 			MinecraftBufferReader.writeString(buf, this.uuid.toString());
+		} else {
+			MinecraftBufferReader.writeString(buf, this.uuid.toString().replace("-", ""));
 		}
 
 		MinecraftBufferReader.writeString(buf, this.username);
